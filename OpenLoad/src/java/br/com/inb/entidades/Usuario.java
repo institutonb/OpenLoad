@@ -6,17 +6,23 @@
 package br.com.inb.entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +38,25 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByLoginUsuario", query = "SELECT u FROM Usuario u WHERE u.loginUsuario = :loginUsuario"),
     @NamedQuery(name = "Usuario.findByNivelUsuario", query = "SELECT u FROM Usuario u WHERE u.nivelUsuario = :nivelUsuario")})
 public class Usuario implements Serializable {
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "emailUsuario")
+    private String emailUsuario;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "nivelUsuario")
+    private int nivelUsuario;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "statususuario")
+    private boolean statususuario;
+    @ManyToMany(mappedBy = "usuarioCollection")
+    private Collection<Curso> cursoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private Collection<DadosUsuario> dadosUsuarioCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    private Collection<Exercicio> exercicioCollection;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,8 +69,6 @@ public class Usuario implements Serializable {
     @Size(max = 45)
     @Column(name = "loginUsuario")
     private String loginUsuario;
-    @Column(name = "nivelUsuario")
-    private Integer nivelUsuario;
 
     public Usuario() {
     }
@@ -78,13 +101,6 @@ public class Usuario implements Serializable {
         this.loginUsuario = loginUsuario;
     }
 
-    public Integer getNivelUsuario() {
-        return nivelUsuario;
-    }
-
-    public void setNivelUsuario(Integer nivelUsuario) {
-        this.nivelUsuario = nivelUsuario;
-    }
 
     @Override
     public int hashCode() {
@@ -109,6 +125,57 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "br.com.inb.entidade.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+
+    public String getEmailUsuario() {
+        return emailUsuario;
+    }
+
+    public void setEmailUsuario(String emailUsuario) {
+        this.emailUsuario = emailUsuario;
+    }
+
+    public int getNivelUsuario() {
+        return nivelUsuario;
+    }
+
+    public void setNivelUsuario(int nivelUsuario) {
+        this.nivelUsuario = nivelUsuario;
+    }
+
+    public boolean getStatususuario() {
+        return statususuario;
+    }
+
+    public void setStatususuario(boolean statususuario) {
+        this.statususuario = statususuario;
+    }
+
+    @XmlTransient
+    public Collection<Curso> getCursoCollection() {
+        return cursoCollection;
+    }
+
+    public void setCursoCollection(Collection<Curso> cursoCollection) {
+        this.cursoCollection = cursoCollection;
+    }
+
+    @XmlTransient
+    public Collection<DadosUsuario> getDadosUsuarioCollection() {
+        return dadosUsuarioCollection;
+    }
+
+    public void setDadosUsuarioCollection(Collection<DadosUsuario> dadosUsuarioCollection) {
+        this.dadosUsuarioCollection = dadosUsuarioCollection;
+    }
+
+    @XmlTransient
+    public Collection<Exercicio> getExercicioCollection() {
+        return exercicioCollection;
+    }
+
+    public void setExercicioCollection(Collection<Exercicio> exercicioCollection) {
+        this.exercicioCollection = exercicioCollection;
     }
     
 }
