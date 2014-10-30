@@ -6,8 +6,8 @@
 package br.com.inb.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -109,11 +109,9 @@ public class Curso implements Serializable {
         @JoinColumn(name = "curso_idcurso", referencedColumnName = "idcurso")}, inverseJoinColumns = {
         @JoinColumn(name = "idusuario_curso", referencedColumnName = "idUsuario")})
     @ManyToMany
-    private Collection<Usuario> usuarioCollection;
+    private List<Usuario> usuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
-    private Collection<Aula> aulaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
-    private Collection<Arquivo> arquivoCollection;
+    private List<Aula> aulaList;
 
     public Curso() {
     }
@@ -225,30 +223,21 @@ public class Curso implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
-    }
-
-    @XmlTransient
-    public Collection<Aula> getAulaCollection() {
-        return aulaCollection;
-    }
-
-    public void setAulaCollection(Collection<Aula> aulaCollection) {
-        this.aulaCollection = aulaCollection;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @XmlTransient
-    public Collection<Arquivo> getArquivoCollection() {
-        return arquivoCollection;
+    public List<Aula> getAulaList() {
+        return aulaList;
     }
 
-    public void setArquivoCollection(Collection<Arquivo> arquivoCollection) {
-        this.arquivoCollection = arquivoCollection;
+    public void setAulaList(List<Aula> aulaList) {
+        this.aulaList = aulaList;
     }
 
     @Override

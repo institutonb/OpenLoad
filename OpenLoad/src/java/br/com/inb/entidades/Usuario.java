@@ -6,7 +6,7 @@
 package br.com.inb.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,9 +35,21 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario"),
     @NamedQuery(name = "Usuario.findBySenhaUsuario", query = "SELECT u FROM Usuario u WHERE u.senhaUsuario = :senhaUsuario"),
-    @NamedQuery(name = "Usuario.findByLoginUsuario", query = "SELECT u FROM Usuario u WHERE u.loginUsuario = :loginUsuario"),
-    @NamedQuery(name = "Usuario.findByNivelUsuario", query = "SELECT u FROM Usuario u WHERE u.nivelUsuario = :nivelUsuario")})
+    @NamedQuery(name = "Usuario.findByEmailUsuario", query = "SELECT u FROM Usuario u WHERE u.emailUsuario = :emailUsuario"),
+    @NamedQuery(name = "Usuario.findByNivelUsuario", query = "SELECT u FROM Usuario u WHERE u.nivelUsuario = :nivelUsuario"),
+    @NamedQuery(name = "Usuario.findByStatususuario", query = "SELECT u FROM Usuario u WHERE u.statususuario = :statususuario")})
 public class Usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idUsuario")
+    private Integer idUsuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "senhaUsuario")
+    private String senhaUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -51,30 +63,24 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "statususuario")
     private boolean statususuario;
-    @ManyToMany(mappedBy = "usuarioCollection")
-    private Collection<Curso> cursoCollection;
+    @ManyToMany(mappedBy = "usuarioList")
+    private List<Curso> cursoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<DadosUsuario> dadosUsuarioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<Exercicio> exercicioCollection;
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idUsuario")
-    private Integer idUsuario;
-    @Size(max = 45)
-    @Column(name = "senhaUsuario")
-    private String senhaUsuario;
-    @Size(max = 45)
-    @Column(name = "loginUsuario")
-    private String loginUsuario;
+    private List<DadosUsuario> dadosUsuarioList;
 
     public Usuario() {
     }
 
     public Usuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public Usuario(Integer idUsuario, String senhaUsuario, String emailUsuario, int nivelUsuario, boolean statususuario) {
+        this.idUsuario = idUsuario;
+        this.senhaUsuario = senhaUsuario;
+        this.emailUsuario = emailUsuario;
+        this.nivelUsuario = nivelUsuario;
+        this.statususuario = statususuario;
     }
 
     public Integer getIdUsuario() {
@@ -91,40 +97,6 @@ public class Usuario implements Serializable {
 
     public void setSenhaUsuario(String senhaUsuario) {
         this.senhaUsuario = senhaUsuario;
-    }
-
-    public String getLoginUsuario() {
-        return loginUsuario;
-    }
-
-    public void setLoginUsuario(String loginUsuario) {
-        this.loginUsuario = loginUsuario;
-    }
-
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
-            return false;
-        }
-        Usuario other = (Usuario) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "br.com.inb.entidade.Usuario[ idUsuario=" + idUsuario + " ]";
     }
 
     public String getEmailUsuario() {
@@ -152,30 +124,46 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Curso> getCursoCollection() {
-        return cursoCollection;
+    public List<Curso> getCursoList() {
+        return cursoList;
     }
 
-    public void setCursoCollection(Collection<Curso> cursoCollection) {
-        this.cursoCollection = cursoCollection;
-    }
-
-    @XmlTransient
-    public Collection<DadosUsuario> getDadosUsuarioCollection() {
-        return dadosUsuarioCollection;
-    }
-
-    public void setDadosUsuarioCollection(Collection<DadosUsuario> dadosUsuarioCollection) {
-        this.dadosUsuarioCollection = dadosUsuarioCollection;
+    public void setCursoList(List<Curso> cursoList) {
+        this.cursoList = cursoList;
     }
 
     @XmlTransient
-    public Collection<Exercicio> getExercicioCollection() {
-        return exercicioCollection;
+    public List<DadosUsuario> getDadosUsuarioList() {
+        return dadosUsuarioList;
     }
 
-    public void setExercicioCollection(Collection<Exercicio> exercicioCollection) {
-        this.exercicioCollection = exercicioCollection;
+    public void setDadosUsuarioList(List<DadosUsuario> dadosUsuarioList) {
+        this.dadosUsuarioList = dadosUsuarioList;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) object;
+        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "br.com.inb.entidades.Usuario[ idUsuario=" + idUsuario + " ]";
     }
     
 }

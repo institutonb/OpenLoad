@@ -6,7 +6,9 @@
 package br.com.inb.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,10 +17,12 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -53,9 +57,14 @@ public class Aula implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "descricaoaula")
     private String descricaoaula;
+    @JoinColumn(name = "exercicio_idexercicio", referencedColumnName = "idexercicio")
+    @ManyToOne(optional = false)
+    private Exercicio exercicioIdexercicio;
     @JoinColumn(name = "fk_curso", referencedColumnName = "idcurso", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Curso curso;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aula")
+    private List<Arquivo> arquivoList;
 
     public Aula() {
     }
@@ -107,12 +116,29 @@ public class Aula implements Serializable {
         this.descricaoaula = descricaoaula;
     }
 
+    public Exercicio getExercicioIdexercicio() {
+        return exercicioIdexercicio;
+    }
+
+    public void setExercicioIdexercicio(Exercicio exercicioIdexercicio) {
+        this.exercicioIdexercicio = exercicioIdexercicio;
+    }
+
     public Curso getCurso() {
         return curso;
     }
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    @XmlTransient
+    public List<Arquivo> getArquivoList() {
+        return arquivoList;
+    }
+
+    public void setArquivoList(List<Arquivo> arquivoList) {
+        this.arquivoList = arquivoList;
     }
 
     @Override

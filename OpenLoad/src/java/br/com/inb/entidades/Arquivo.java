@@ -8,9 +8,12 @@ package br.com.inb.entidades;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,44 +31,44 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Arquivo.findAll", query = "SELECT a FROM Arquivo a"),
-    @NamedQuery(name = "Arquivo.findByIdarquivo", query = "SELECT a FROM Arquivo a WHERE a.arquivoPK.idarquivo = :idarquivo"),
-    @NamedQuery(name = "Arquivo.findByNomearquivo", query = "SELECT a FROM Arquivo a WHERE a.nomearquivo = :nomearquivo"),
-    @NamedQuery(name = "Arquivo.findByFkCurso", query = "SELECT a FROM Arquivo a WHERE a.arquivoPK.fkCurso = :fkCurso")})
+    @NamedQuery(name = "Arquivo.findByIdarquivo", query = "SELECT a FROM Arquivo a WHERE a.idarquivo = :idarquivo"),
+    @NamedQuery(name = "Arquivo.findByNomearquivo", query = "SELECT a FROM Arquivo a WHERE a.nomearquivo = :nomearquivo")})
 public class Arquivo implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ArquivoPK arquivoPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idarquivo")
+    private Integer idarquivo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "nomearquivo")
     private String nomearquivo;
-    @JoinColumn(name = "fk_curso", referencedColumnName = "idcurso", insertable = false, updatable = false)
+    @JoinColumns({
+        @JoinColumn(name = "aula_idaula", referencedColumnName = "idaula"),
+        @JoinColumn(name = "aula_fk_curso", referencedColumnName = "fk_curso")})
     @ManyToOne(optional = false)
-    private Curso curso;
+    private Aula aula;
 
     public Arquivo() {
     }
 
-    public Arquivo(ArquivoPK arquivoPK) {
-        this.arquivoPK = arquivoPK;
+    public Arquivo(Integer idarquivo) {
+        this.idarquivo = idarquivo;
     }
 
-    public Arquivo(ArquivoPK arquivoPK, String nomearquivo) {
-        this.arquivoPK = arquivoPK;
+    public Arquivo(Integer idarquivo, String nomearquivo) {
+        this.idarquivo = idarquivo;
         this.nomearquivo = nomearquivo;
     }
 
-    public Arquivo(int idarquivo, int fkCurso) {
-        this.arquivoPK = new ArquivoPK(idarquivo, fkCurso);
+    public Integer getIdarquivo() {
+        return idarquivo;
     }
 
-    public ArquivoPK getArquivoPK() {
-        return arquivoPK;
-    }
-
-    public void setArquivoPK(ArquivoPK arquivoPK) {
-        this.arquivoPK = arquivoPK;
+    public void setIdarquivo(Integer idarquivo) {
+        this.idarquivo = idarquivo;
     }
 
     public String getNomearquivo() {
@@ -76,18 +79,18 @@ public class Arquivo implements Serializable {
         this.nomearquivo = nomearquivo;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public Aula getAula() {
+        return aula;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setAula(Aula aula) {
+        this.aula = aula;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (arquivoPK != null ? arquivoPK.hashCode() : 0);
+        hash += (idarquivo != null ? idarquivo.hashCode() : 0);
         return hash;
     }
 
@@ -98,7 +101,7 @@ public class Arquivo implements Serializable {
             return false;
         }
         Arquivo other = (Arquivo) object;
-        if ((this.arquivoPK == null && other.arquivoPK != null) || (this.arquivoPK != null && !this.arquivoPK.equals(other.arquivoPK))) {
+        if ((this.idarquivo == null && other.idarquivo != null) || (this.idarquivo != null && !this.idarquivo.equals(other.idarquivo))) {
             return false;
         }
         return true;
@@ -106,7 +109,7 @@ public class Arquivo implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.inb.entidades.Arquivo[ arquivoPK=" + arquivoPK + " ]";
+        return "br.com.inb.entidades.Arquivo[ idarquivo=" + idarquivo + " ]";
     }
     
 }
