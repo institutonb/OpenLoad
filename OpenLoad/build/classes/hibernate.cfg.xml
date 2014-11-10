@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="OpenLoad">
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.password">1234</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/openload</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.default_schema">openLoad</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+		
+		<mapping class="br.com.inb.entity.Usuario" />
+		<mapping class="br.com.inb.entity.Curso"/>
+		<mapping class="br.com.inb.entity.DadosUsuario"/>
+		<mapping class="br.com.inb.entity.Aula"/>
+		<mapping class="br.com.inb.entity.Arquivo"/>
+		<mapping class="br.com.inb.entity.Exercicio"/>
+		
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="OpenLoad">
+		<class>br.com.inb.entity.Arquivo</class>
+		<class>br.com.inb.entity.Aula</class>
+		<class>br.com.inb.entity.AulaPK</class>
+		<class>br.com.inb.entity.Curso</class>
+		<class>br.com.inb.entity.DadosUsuario</class>
+		<class>br.com.inb.entity.DadosUsuarioPK</class>
+		<class>br.com.inb.entity.Exercicio</class>
+		<class>br.com.inb.entity.Usuario</class>
+	</persistence-unit>
+</persistence>
