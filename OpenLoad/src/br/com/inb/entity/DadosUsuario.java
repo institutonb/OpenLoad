@@ -23,6 +23,9 @@ public class DadosUsuario implements Serializable {
 	@Column(name="enderecodados_usuario")
 	private String enderecodadosUsuario;
 
+	@Column(name="fk_imagem")
+	private String fkImagem;
+
 	@Column(name="nomedados_usuario")
 	private String nomedadosUsuario;
 
@@ -30,7 +33,7 @@ public class DadosUsuario implements Serializable {
 	private int telefonedadosUsuario;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="fk_usuario",insertable=false,updatable=false)
 	private Usuario usuario;
 
@@ -59,6 +62,14 @@ public class DadosUsuario implements Serializable {
 
 	public void setEnderecodadosUsuario(String enderecodadosUsuario) {
 		this.enderecodadosUsuario = enderecodadosUsuario;
+	}
+
+	public String getFkImagem() {
+		return this.fkImagem;
+	}
+
+	public void setFkImagem(String fkImagem) {
+		this.fkImagem = fkImagem;
 	}
 
 	public String getNomedadosUsuario() {

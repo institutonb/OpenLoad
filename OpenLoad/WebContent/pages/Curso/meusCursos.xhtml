@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:composition template="/pages/template/_Cursos.xhtml">
+	<ui:define name="title"> OpenLoad - MeusCursos</ui:define>
+
+	<ui:define name="content">
+		<b:container>
+
+			<b:row>
+				<ul style="margin: 0 auto; margin-bottom: 10px;"
+					class="center-block list-group-item">
+					<ui:repeat var="imagens" value="#{curso.imagensCursos}">
+						<li id="cursos" class="content content_box">
+							<div class="row clearfix">
+								<div class="col-md-2 column">
+									<img alt="140x140"
+										src="../../resources/images/#{imagens.nomeimagem}"
+										class="img-thumbnail" />
+								</div>
+								<div class="col-md-6 column">
+									<div class="page-header">
+										<a href="#"><h1> #{curso.usuario.cursos.get(0).nomecurso}</h1></a>
+									</div>
+								</div>
+								<div class="col-md-4 column">
+									<a href="#"><span class="label label-primary pull-right" >Grade
+											Do Curso</span></a><br /> <a href="#"><span class="label label-primary pull-right">Ir
+											para Curso</span></a><br />
+									<div class="progress-bar progress-striped progress.active" role="progressbar" aria-valuenow="#{curso.usuario.cursos.get(0).porcentagemCurso}"
+										aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+										<span>#{curso.usuario.cursos.get(0).porcentagemCurso}% concluido</span>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ui:repeat>
+				</ul>
+			</b:row>
+		</b:container>
+	</ui:define>
+
+</ui:composition>
+</html>

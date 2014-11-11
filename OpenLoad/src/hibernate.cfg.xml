@@ -17,6 +17,7 @@
 		<mapping class="br.com.inb.entity.Aula"/>
 		<mapping class="br.com.inb.entity.Arquivo"/>
 		<mapping class="br.com.inb.entity.Exercicio"/>
+		<mapping class="br.com.inb.entity.Imagem"/>
 		
 	</session-factory>
 </hibernate-configuration>

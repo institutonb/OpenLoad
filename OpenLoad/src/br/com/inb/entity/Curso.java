@@ -19,6 +19,8 @@ public class Curso implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idcurso;
 
+	private byte ativoCurso;
+
 	@Lob
 	private String conteudocurso;
 
@@ -31,6 +33,8 @@ public class Curso implements Serializable {
 	private String diasaulacurso;
 
 	private String nomecurso;
+
+	private int porcentagemCurso;
 
 	@Lob
 	private String prerequisitoscurso;
@@ -47,6 +51,11 @@ public class Curso implements Serializable {
 	@OneToMany(mappedBy="curso")
 	private List<Aula> aulas;
 
+	//bi-directional one-to-one association to Imagem
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idcurso")
+	private Imagem imagem;
+
 	//bi-directional many-to-many association to Usuario
 	@ManyToMany(mappedBy="cursos")
 	private List<Usuario> usuarios;
@@ -60,6 +69,14 @@ public class Curso implements Serializable {
 
 	public void setIdcurso(int idcurso) {
 		this.idcurso = idcurso;
+	}
+
+	public byte getAtivoCurso() {
+		return this.ativoCurso;
+	}
+
+	public void setAtivoCurso(byte ativoCurso) {
+		this.ativoCurso = ativoCurso;
 	}
 
 	public String getConteudocurso() {
@@ -100,6 +117,14 @@ public class Curso implements Serializable {
 
 	public void setNomecurso(String nomecurso) {
 		this.nomecurso = nomecurso;
+	}
+
+	public int getPorcentagemCurso() {
+		return this.porcentagemCurso;
+	}
+
+	public void setPorcentagemCurso(int porcentagemCurso) {
+		this.porcentagemCurso = porcentagemCurso;
 	}
 
 	public String getPrerequisitoscurso() {
@@ -162,6 +187,14 @@ public class Curso implements Serializable {
 		aula.setCurso(null);
 
 		return aula;
+	}
+
+	public Imagem getImagem() {
+		return this.imagem;
+	}
+
+	public void setImagem(Imagem imagem) {
+		this.imagem = imagem;
 	}
 
 	public List<Usuario> getUsuarios() {

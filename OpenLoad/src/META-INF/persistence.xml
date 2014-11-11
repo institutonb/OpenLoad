@@ -11,5 +11,6 @@
 		<class>br.com.inb.entity.DadosUsuarioPK</class>
 		<class>br.com.inb.entity.Exercicio</class>
 		<class>br.com.inb.entity.Usuario</class>
+		<class>br.com.inb.entity.Imagem</class>
 	</persistence-unit>
 </persistence>
