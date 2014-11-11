@@ -10,20 +10,25 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="usuario")
 @NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private int idUsuario;
 
+	@Column(nullable=false, length=45)
 	private String emailUsuario;
 
+	@Column(nullable=false)
 	private int nivelUsuario;
 
+	@Column(nullable=false, length=45)
 	private String senhaUsuario;
 
+	@Column(nullable=false)
 	private byte statususuario;
 
 	//bi-directional many-to-one association to DadosUsuario
@@ -35,10 +40,10 @@ public class Usuario implements Serializable {
 	@JoinTable(
 		name="usuario_curso"
 		, joinColumns={
-			@JoinColumn(name="idusuario_curso")
+			@JoinColumn(name="idusuario_curso", nullable=false)
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="curso_idcurso")
+			@JoinColumn(name="curso_idcurso", nullable=false)
 			}
 		)
 	private List<Curso> cursos;

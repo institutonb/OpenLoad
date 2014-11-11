@@ -10,22 +10,27 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="exercicio")
 @NamedQuery(name="Exercicio.findAll", query="SELECT e FROM Exercicio e")
 public class Exercicio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private int idexercicio;
 
 	@Lob
+	@Column(nullable=false)
 	private String perguntaexercicio;
 
+	@Column(nullable=false, length=45)
 	private String qtdacertosexercicio;
 
+	@Column(nullable=false, length=45)
 	private String qtderrosexercicio;
 
 	@Lob
+	@Column(nullable=false)
 	private String respostaexercicio;
 
 	//bi-directional many-to-one association to Aula

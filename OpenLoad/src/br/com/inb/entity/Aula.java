@@ -14,19 +14,38 @@ import java.util.List;
 @NamedQuery(name="Aula.findAll", query="SELECT a FROM Aula a")
 public class Aula implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
 	private AulaPK id;
+
+	@Lob
+	@Column(nullable=false)
 	private String descricaoaula;
+
+	@Lob
+	@Column(nullable=false)
 	private String linkaula;
+
+	@Column(nullable=false, length=40)
 	private String nomeaula;
+
+	//bi-directional many-to-one association to Arquivo
+	@OneToMany(mappedBy="aula")
 	private List<Arquivo> arquivos;
+
+	//bi-directional many-to-one association to Curso
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="fk_curso", nullable=false, insertable=false, updatable=false)
 	private Curso curso;
+
+	//bi-directional many-to-one association to Exercicio
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="exercicio_idexercicio", nullable=false)
 	private Exercicio exercicio;
 
 	public Aula() {
 	}
 
-
-	@EmbeddedId
 	public AulaPK getId() {
 		return this.id;
 	}
@@ -35,9 +54,6 @@ public class Aula implements Serializable {
 		this.id = id;
 	}
 
-
-	@Lob
-	@Column(nullable=false)
 	public String getDescricaoaula() {
 		return this.descricaoaula;
 	}
@@ -46,9 +62,6 @@ public class Aula implements Serializable {
 		this.descricaoaula = descricaoaula;
 	}
 
-
-	@Lob
-	@Column(nullable=false)
 	public String getLinkaula() {
 		return this.linkaula;
 	}
@@ -57,8 +70,6 @@ public class Aula implements Serializable {
 		this.linkaula = linkaula;
 	}
 
-
-	@Column(nullable=false, length=40)
 	public String getNomeaula() {
 		return this.nomeaula;
 	}
@@ -67,9 +78,6 @@ public class Aula implements Serializable {
 		this.nomeaula = nomeaula;
 	}
 
-
-	//bi-directional many-to-one association to Arquivo
-	@OneToMany(mappedBy="aula")
 	public List<Arquivo> getArquivos() {
 		return this.arquivos;
 	}
@@ -92,10 +100,6 @@ public class Aula implements Serializable {
 		return arquivo;
 	}
 
-
-	//bi-directional many-to-one association to Curso
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_curso", nullable=false, insertable=false, updatable=false)
 	public Curso getCurso() {
 		return this.curso;
 	}
@@ -104,10 +108,6 @@ public class Aula implements Serializable {
 		this.curso = curso;
 	}
 
-
-	//bi-directional many-to-one association to Exercicio
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="exercicio_idexercicio", nullable=false)
 	public Exercicio getExercicio() {
 		return this.exercicio;
 	}

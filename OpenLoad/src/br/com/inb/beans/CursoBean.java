@@ -3,10 +3,12 @@ package br.com.inb.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import br.com.inb.dao.Dao;
+import br.com.inb.entity.Curso;
 import br.com.inb.entity.Imagem;
 import br.com.inb.entity.Usuario;
 
@@ -30,9 +32,15 @@ public class CursoBean {
 		Dao.commit();
 		return user;
 	}
+	
 
-	public CursoBean() {
-		// TODO Auto-generated constructor stub
+	@PostConstruct
+	private void beginDao(){
+		
 	}
+	public CursoBean() {
+	}
+	
+	
 
 }

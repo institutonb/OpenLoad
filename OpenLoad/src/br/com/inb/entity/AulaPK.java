@@ -12,9 +12,10 @@ public class AulaPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
+	@Column(unique=true, nullable=false)
 	private int idaula;
 
-	@Column(name="fk_curso", insertable=false, updatable=false)
+	@Column(name="fk_curso", insertable=false, updatable=false, unique=true, nullable=false)
 	private int fkCurso;
 
 	public AulaPK() {

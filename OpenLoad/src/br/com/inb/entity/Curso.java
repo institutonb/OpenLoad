@@ -11,40 +11,51 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="curso")
 @NamedQuery(name="Curso.findAll", query="SELECT c FROM Curso c")
 public class Curso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private int idcurso;
 
 	private byte ativoCurso;
 
 	@Lob
+	@Column(nullable=false)
 	private String conteudocurso;
 
 	@Temporal(TemporalType.DATE)
+	@Column(nullable=false)
 	private Date datainiciocurso;
 
 	@Lob
+	@Column(nullable=false)
 	private String descricaocurso;
 
+	@Column(nullable=false, length=80)
 	private String diasaulacurso;
 
+	@Column(nullable=false, length=45)
 	private String nomecurso;
 
 	private int porcentagemCurso;
 
 	@Lob
+	@Column(nullable=false)
 	private String prerequisitoscurso;
 
+	@Column(nullable=false, length=255)
 	private String publicoalvocurso;
 
+	@Column(nullable=false, length=15)
 	private String tempocurso;
 
+	@Column(nullable=false)
 	private byte tipocurso;
 
+	@Column(nullable=false)
 	private float valorcurso;
 
 	//bi-directional many-to-one association to Aula
@@ -53,7 +64,7 @@ public class Curso implements Serializable {
 
 	//bi-directional one-to-one association to Imagem
 	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idcurso")
+	@JoinColumn(name="idcurso", nullable=false, insertable=false, updatable=false)
 	private Imagem imagem;
 
 	//bi-directional many-to-many association to Usuario

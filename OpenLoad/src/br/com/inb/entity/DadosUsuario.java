@@ -17,24 +17,26 @@ public class DadosUsuario implements Serializable {
 	@EmbeddedId
 	private DadosUsuarioPK id;
 
-	@Column(name="cpfdados_usuario")
+	@Column(name="cpfdados_usuario", nullable=false)
 	private int cpfdadosUsuario;
 
-	@Column(name="enderecodados_usuario")
+	@Column(name="enderecodados_usuario", length=80)
 	private String enderecodadosUsuario;
 
-	@Column(name="fk_imagem")
-	private String fkImagem;
-
-	@Column(name="nomedados_usuario")
+	@Column(name="nomedados_usuario", nullable=false, length=80)
 	private String nomedadosUsuario;
 
 	@Column(name="telefonedados_usuario")
 	private int telefonedadosUsuario;
 
+	//bi-directional many-to-one association to Imagem
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="fk_imagem")
+	private Imagem imagem;
+
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_usuario",insertable=false,updatable=false)
+	@JoinColumn(name="fk_usuario", nullable=false, insertable=false, updatable=false)
 	private Usuario usuario;
 
 	public DadosUsuario() {
@@ -64,14 +66,6 @@ public class DadosUsuario implements Serializable {
 		this.enderecodadosUsuario = enderecodadosUsuario;
 	}
 
-	public String getFkImagem() {
-		return this.fkImagem;
-	}
-
-	public void setFkImagem(String fkImagem) {
-		this.fkImagem = fkImagem;
-	}
-
 	public String getNomedadosUsuario() {
 		return this.nomedadosUsuario;
 	}
@@ -86,6 +80,14 @@ public class DadosUsuario implements Serializable {
 
 	public void setTelefonedadosUsuario(int telefonedadosUsuario) {
 		this.telefonedadosUsuario = telefonedadosUsuario;
+	}
+
+	public Imagem getImagem() {
+		return this.imagem;
+	}
+
+	public void setImagem(Imagem imagem) {
+		this.imagem = imagem;
 	}
 
 	public Usuario getUsuario() {

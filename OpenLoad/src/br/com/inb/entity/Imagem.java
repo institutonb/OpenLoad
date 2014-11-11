@@ -2,6 +2,7 @@ package br.com.inb.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -9,21 +10,28 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="imagem")
 @NamedQuery(name="Imagem.findAll", query="SELECT i FROM Imagem i")
 public class Imagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(unique=true, nullable=false)
 	private int idimagem;
 
+	@Column(length=45)
 	private String nomeimagem;
 
+	@Column(length=45)
 	private String tipoimagem;
 
 	//bi-directional one-to-one association to Curso
 	@OneToOne(mappedBy="imagem", fetch=FetchType.LAZY)
 	private Curso curso;
+
+	//bi-directional many-to-one association to DadosUsuario
+	@OneToMany(mappedBy="imagem")
+	private List<DadosUsuario> dadosUsuarios;
 
 	public Imagem() {
 	}
@@ -58,6 +66,28 @@ public class Imagem implements Serializable {
 
 	public void setCurso(Curso curso) {
 		this.curso = curso;
+	}
+
+	public List<DadosUsuario> getDadosUsuarios() {
+		return this.dadosUsuarios;
+	}
+
+	public void setDadosUsuarios(List<DadosUsuario> dadosUsuarios) {
+		this.dadosUsuarios = dadosUsuarios;
+	}
+
+	public DadosUsuario addDadosUsuario(DadosUsuario dadosUsuario) {
+		getDadosUsuarios().add(dadosUsuario);
+		dadosUsuario.setImagem(this);
+
+		return dadosUsuario;
+	}
+
+	public DadosUsuario removeDadosUsuario(DadosUsuario dadosUsuario) {
+		getDadosUsuarios().remove(dadosUsuario);
+		dadosUsuario.setImagem(null);
+
+		return dadosUsuario;
 	}
 
 }

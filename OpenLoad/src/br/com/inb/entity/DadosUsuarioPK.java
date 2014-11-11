@@ -12,10 +12,10 @@ public class DadosUsuarioPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="iddados_usuario")
+	@Column(name="iddados_usuario", unique=true, nullable=false)
 	private int iddadosUsuario;
 
-	@Column(name="fk_usuario", insertable=false, updatable=false)
+	@Column(name="fk_usuario", insertable=false, updatable=false, unique=true, nullable=false)
 	private int fkUsuario;
 
 	public DadosUsuarioPK() {

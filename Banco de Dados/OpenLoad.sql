@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `OpenLoad` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `OpenLoad`;
--- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (x86_64)
+CREATE DATABASE  IF NOT EXISTS `openload` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `openload`;
+-- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
 --
--- Host: 127.0.0.1    Database: OpenLoad
+-- Host: localhost    Database: openload
 -- ------------------------------------------------------
--- Server version	5.5.40-0ubuntu0.14.04.1
+-- Server version	5.6.21-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -61,8 +61,8 @@ CREATE TABLE `aula` (
   PRIMARY KEY (`idaula`,`fk_curso`),
   KEY `fk_aula_curso1_idx` (`fk_curso`),
   KEY `fk_aula_exercicio1_idx` (`exercicio_idexercicio`),
-  CONSTRAINT `fk_aula_exercicio1` FOREIGN KEY (`exercicio_idexercicio`) REFERENCES `exercicio` (`idexercicio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_aula_curso1` FOREIGN KEY (`fk_curso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_aula_curso1` FOREIGN KEY (`fk_curso`) REFERENCES `curso` (`idcurso`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_aula_exercicio1` FOREIGN KEY (`exercicio_idexercicio`) REFERENCES `exercicio` (`idexercicio`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -94,8 +94,12 @@ CREATE TABLE `curso` (
   `datainiciocurso` date NOT NULL,
   `diasaulacurso` varchar(80) NOT NULL,
   `publicoalvocurso` varchar(255) NOT NULL,
-  PRIMARY KEY (`idcurso`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `ativoCurso` tinyint(4) DEFAULT NULL,
+  `porcentagemCurso` int(100) DEFAULT NULL,
+  PRIMARY KEY (`idcurso`),
+  KEY `fk_imagem_idx` (`nomecurso`),
+  CONSTRAINT `fk_imagem` FOREIGN KEY (`idcurso`) REFERENCES `imagem` (`idimagem`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,6 +108,7 @@ CREATE TABLE `curso` (
 
 LOCK TABLES `curso` WRITE;
 /*!40000 ALTER TABLE `curso` DISABLE KEYS */;
+INSERT INTO `curso` VALUES (1,'java',1,200,'um curso de java','muita coisa','LP','200h','2020-01-15','5','um monte de gente',1,30);
 /*!40000 ALTER TABLE `curso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,11 +126,14 @@ CREATE TABLE `dados_usuario` (
   `telefonedados_usuario` int(11) DEFAULT NULL,
   `fk_usuario` int(11) NOT NULL,
   `enderecodados_usuario` varchar(80) DEFAULT NULL,
+  `fk_imagem` int(11) DEFAULT NULL,
   PRIMARY KEY (`iddados_usuario`,`fk_usuario`),
   UNIQUE KEY `cpfdados_usuario_UNIQUE` (`cpfdados_usuario`),
   KEY `fk_dados_usuario_usuario_idx` (`fk_usuario`),
+  KEY `fk_dados_usuario_imagem_idx` (`fk_imagem`),
+  CONSTRAINT `fk_dados_usuario_imagem` FOREIGN KEY (`fk_imagem`) REFERENCES `imagem` (`idimagem`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_dados_usuario_usuario` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,6 +142,7 @@ CREATE TABLE `dados_usuario` (
 
 LOCK TABLES `dados_usuario` WRITE;
 /*!40000 ALTER TABLE `dados_usuario` DISABLE KEYS */;
+INSERT INTO `dados_usuario` VALUES (1,'manoel',0,33333333,1,'rua la em casa',5);
 /*!40000 ALTER TABLE `dados_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,6 +173,31 @@ LOCK TABLES `exercicio` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `imagem`
+--
+
+DROP TABLE IF EXISTS `imagem`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `imagem` (
+  `idimagem` int(11) NOT NULL AUTO_INCREMENT,
+  `nomeimagem` varchar(45) DEFAULT NULL,
+  `tipoimagem` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`idimagem`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imagem`
+--
+
+LOCK TABLES `imagem` WRITE;
+/*!40000 ALTER TABLE `imagem` DISABLE KEYS */;
+INSERT INTO `imagem` VALUES (1,'java8.png','java'),(2,'form.games.png','games'),(3,'form.ios7.png','ios'),(4,'css3.png','css'),(5,'1.png','usuario');
+/*!40000 ALTER TABLE `imagem` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuario`
 --
 
@@ -177,7 +211,7 @@ CREATE TABLE `usuario` (
   `nivelUsuario` int(11) NOT NULL,
   `statususuario` tinyint(1) NOT NULL,
   PRIMARY KEY (`idUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,6 +220,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'12345','manoel.jfneto@gmail.com',0,1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,6 +248,7 @@ CREATE TABLE `usuario_curso` (
 
 LOCK TABLES `usuario_curso` WRITE;
 /*!40000 ALTER TABLE `usuario_curso` DISABLE KEYS */;
+INSERT INTO `usuario_curso` VALUES (1,1);
 /*!40000 ALTER TABLE `usuario_curso` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -225,4 +261,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-30 14:53:08
+-- Dump completed on 2014-11-11 14:57:12
