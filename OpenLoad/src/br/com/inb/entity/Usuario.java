@@ -29,7 +29,7 @@ public class Usuario implements Serializable {
 	private String senhaUsuario;
 
 	@Column(nullable=false)
-	private byte statususuario;
+	private short statususuario;
 
 	//bi-directional many-to-one association to DadosUsuario
 	@OneToMany(mappedBy="usuario")
@@ -83,7 +83,7 @@ public class Usuario implements Serializable {
 		this.senhaUsuario = senhaUsuario;
 	}
 
-	public byte getStatususuario() {
+	public short getStatususuario() {
 		return this.statususuario;
 	}
 

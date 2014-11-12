@@ -3,18 +3,16 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:b="http://bootsfaces.net/ui"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/pages/template/_Cursos.xhtml">
-	<ui:define name="title"> OpenLoad - #{curso.usuario.cursos.get(0).nomecurso}</ui:define>
+	<ui:define name="title"> OpenLoad - #{curso.selectedCourse.nomecurso}</ui:define>
 	<ui:define name="content">
 		<b:container>
 			<b:row>
 				<div class="col-md-6 column">
 					<ul>
-						<ui:repeat var="conteudo"
-							value="#{curso.usuario.cursos.get(0).aulas}">
+						<ui:repeat var="conteudo" value="#{curso.selectedCourse.aulas}">
 							<li>#{conteudo.nomeaula}</li>
 						</ui:repeat>
 					</ul>
@@ -22,17 +20,17 @@
 				<div class="col-md-6 column">
 					<div class="panel-group" id="panel-60271">
 						<div class="panel panel-default">
-							<ui:repeat var="aula"
-								value="#{curso.usuario.cursos.get(0).aulas}">
+							<ui:repeat var="aula" value="#{curso.selectedCourse.aulas}">
 								<div class="panel-heading">
 									<a class="panel-title collapsed" data-toggle="collapse"
-										data-parent="#panel-60271" href="#panel-element-122033">Collapsible
-										#{aula.nomeaula}</a>
+										data-parent="#panel-60271" href="#panel-element-122033">#{aula.nomeaula}</a>
 								</div>
 								<div id="panel-element-122033" class="panel-collapse collapse">
 									<div class="panel-body">
-										<p:media value="https://www.youtube.com/watch?v=HMUDVMiITOU" width="420" height="315"
-											player="flash"  />
+										<div class="hvideo">
+											<iframe width="560" height="315" src="#{aula.linkaula}"
+												frameborder="0" allowfullscreen="true"></iframe>
+										</div>
 									</div>
 								</div>
 							</ui:repeat>

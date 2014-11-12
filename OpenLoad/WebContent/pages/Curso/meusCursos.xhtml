@@ -14,7 +14,7 @@
 			<b:row>
 				<ul style="margin: 0 auto; margin-bottom: 10px;"
 					class="center-block list-group-item">
-					<ui:repeat var="imagens" value="#{curso.imagensCursos}">
+					<ui:repeat var="imagens" value="#{curso.imagesCourses}">
 						<li id="cursos" class="content content_box">
 							<div class="row clearfix">
 								<div class="col-md-2 column">
@@ -22,20 +22,27 @@
 										src="../../resources/images/#{imagens.nomeimagem}"
 										class="img-thumbnail" />
 								</div>
-								<div class="col-md-6 column">
-									<div class="page-header">
-										<a href="#"><h1> #{curso.usuario.cursos.get(0).nomecurso}</h1></a>
+								<ui:repeat var="courses" value="#{curso.courseUser}">
+									<div class="col-md-6 column">
+										<div class="page-header">
+											<a href="#"><h1>#{courses.nomecurso}</h1></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-4 column">
-									<a href="#"><span class="label label-primary pull-right" >Grade
-											Do Curso</span></a><br /> <a href="#"><span class="label label-primary pull-right">Ir
-											para Curso</span></a><br />
-									<div class="progress-bar progress-striped progress.active" role="progressbar" aria-valuenow="#{curso.usuario.cursos.get(0).porcentagemCurso}"
-										aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-										<span>#{curso.usuario.cursos.get(0).porcentagemCurso}% concluido</span>
+									<div class="col-md-4 column">
+										<a href="#"><span class="label label-primary pull-right">Grade
+												Do Curso</span></a><br /> <span class="label label-primary pull-right"><h:link
+												id="idd" value="Ir para Curso" outcome="aulas">
+												<f:param name="id"
+													value="#{courses.idcurso}" />
+											</h:link></span><br />
+										<div class="progress-bar progress-striped progress.active"
+											role="progressbar"
+											aria-valuenow="#{courses.porcentagemCurso}" aria-valuemin="0"
+											aria-valuemax="100" style="width: 100%;">
+											<span>#{courses.porcentagemCurso}% concluido</span>
+										</div>
 									</div>
-								</div>
+								</ui:repeat>
 							</div>
 						</li>
 					</ui:repeat>

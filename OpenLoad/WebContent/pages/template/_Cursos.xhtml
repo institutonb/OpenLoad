@@ -116,38 +116,35 @@
 
 <h:body>
 
-	<div id="top" class="top">
-		<b:navBar brand="OpenLoad" static="false" inverse="true" brandHref="#">
-			<b:navbarLinks>
-				<b:dropMenu value="Cursos">
-					<b:navLink value="Lista de cursos" href="#"></b:navLink>
-					<b:navLink value="Another action" href="#"></b:navLink>
-					<b:navLink value="Something else here" href="#"></b:navLink>
-					<b:navLink></b:navLink>
-					<b:navLink header="Nav header"></b:navLink>
-					<b:navLink value="Separated link" href="#"></b:navLink>
-					<b:navLink value="One more separated link" href="#"></b:navLink>
-				</b:dropMenu>
-				<b:navLink value="Forum" href="#"></b:navLink>
-			</b:navbarLinks>
-			<div class="navbar-right">
-				<b:navbarLinks>
-					<b:dropMenu
-						value="#{curso.usuario.dadosUsuarios.get(0).nomedadosUsuario}"
-						class="">
-						<b:navLink value="Perfil" href="#"></b:navLink>
-						<b:navLink value="Cursos" href="#"></b:navLink>
-						<b:navLink value="Certificados" href="#"></b:navLink>
-						<b:navLink value="Sair" href="#"></b:navLink>
-					</b:dropMenu>
-				</b:navbarLinks>
-				<img
-					src="../../resources/images/#{curso.usuario.dadosUsuarios.get(0).imagem.nomeimagem} "
-					class="thumbnail" width="50" height="50" alt="" />
-			</div>
-		</b:navBar>
-		<br />
-	</div>
+
+	<b:navBar brand="OpenLoad" static="false" inverse="true" brandHref="#"
+		fixed="false">
+		<b:navbarLinks pull="left" >
+			<b:dropMenu value="Cursos">
+				<b:navLink value="Lista de cursos" href="#"></b:navLink>
+				<b:navLink value="Another action" href="#"></b:navLink>
+				<b:navLink value="Something else here" href="#"></b:navLink>
+				<b:navLink></b:navLink>
+				<b:navLink header="Nav header"></b:navLink>
+				<b:navLink value="Separated link" href="#"></b:navLink>
+				<b:navLink value="One more separated link" href="#"></b:navLink>
+			</b:dropMenu>
+			<b:navLink value="Forum" href="#"></b:navLink>
+		</b:navbarLinks>
+		<b:navbarLinks pull="right">
+			<b:dropMenu value="#{curso.dataUser.nomedadosUsuario}" class="">
+				<b:navLink value="Perfil" href="#"></b:navLink>
+				<b:navLink value="Cursos" href="#"></b:navLink>
+				<b:navLink value="Certificados" href="#"></b:navLink>
+				<b:navLink value="Sair" href="#"></b:navLink>
+			</b:dropMenu>
+			<img
+				src="../../resources/images/#{curso.dataUser.imagem.nomeimagem} "
+				class="thumbnail" width="50" height="50" alt="" />
+		</b:navbarLinks>
+
+	</b:navBar>
+	<br />
 
 	<div id="content" class="center_content">
 		<ui:insert name="content">Content</ui:insert>
